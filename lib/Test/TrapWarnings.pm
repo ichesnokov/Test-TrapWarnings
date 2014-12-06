@@ -22,15 +22,27 @@ code.
     use Test::More;
     use Test::TrapWarnings;
     
-    is(
-        trap_warning(
-            Some::Module::some_func(@args),
-            qr/at \s+ line/x,
-            q{some_func() emitted a warning that was expected}
-        ),
-        $my_value,
-        'some_func() returned a proper value'
+    my $code_result = trap_warning(
+        Some::Module::some_func(@args),
+        qr/at \s+ line/x,
+        q{some_func() emitted a warning that was expected}
     );
+    is($code_result, $expected_value, 'some_func() returned a proper value');
+
+=head1 DESCRIPTION
+
+Sometimes when you test a certain code you want to check whether this code
+emits (or doesn't emit) any warnings, and if so, check the content of these
+warnings. When you're using modules like L<Test::Warn> or L<Test::NoWarning>,
+you need to call your code 2 times: one for testing its warnings, another to
+test return values.
+
+Functions of this module allow you to do that by calling your code only once
+because its functions return the same results as your code returns - whether in
+scalar or list context.
+
+In other words this module is similar to L<Test::Trap> by its functionality,
+but is more simple and only targeted to trapping warnings.
 
 =head1 FUNCTIONS
 
@@ -150,5 +162,19 @@ sub no_warnings (&;$) {
 
     return wantarray ? @results : $result;
 }
+
+=head1 AUTHOR
+
+Ilya Chesnokov L<chesnokov@cpan.org>
+
+=head1 SEE ALSO
+
+L<Test::Warn>, L<Test::NoWarning>, L<Test::Trap>.
+
+=head1 LICENSE
+
+Under the same terms as Perl itself.
+
+=cut
 
 1;
