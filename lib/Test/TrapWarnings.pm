@@ -41,9 +41,9 @@ All functions of this module are exported by default.
 Checks that the warning emitted by the code matches regexp and returns result
 of the called code in proper context.
 
- In: subroutine reference that will be executed
- In: regexp to which the warning is matched
- In: message to display to the user
+ In: $code - subroutine reference that will be executed
+ In: $regexp - regexp to which the warning is matched
+ In: $message - (optional) message to display to the user
  Out: the same results as the passed coderef returns
 
 =cut
@@ -79,7 +79,7 @@ the number of warnings emitted is different from the expected number).
  In: $code - subroutine reference that will be executed
  In: $regexps - arrayref of regexps to which the warning is matched
  In: $messages - arrayref of messages to display when each corresponding warning
-     matches regexp (or not)
+     matches regexp (or not). Messages are optional.
  Out: the same results as the passed coderef returns
 
 =cut
